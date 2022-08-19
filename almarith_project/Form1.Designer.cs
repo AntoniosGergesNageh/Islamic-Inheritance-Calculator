@@ -257,7 +257,6 @@
             // 
             // label1
             // 
-
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 23);
@@ -328,6 +327,7 @@
             this.Male.TabStop = true;
             this.Male.Text = "ذكر";
             this.Male.UseVisualStyleBackColor = false;
+            this.Male.CheckedChanged += new System.EventHandler(this.Male_CheckedChanged);
             // 
             // label6
             // 

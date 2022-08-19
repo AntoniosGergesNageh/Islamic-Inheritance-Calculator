@@ -797,5 +797,9 @@ Tarka.Text =  dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString();
 
         }
 
+        private void Male_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
