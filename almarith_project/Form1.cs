@@ -617,7 +617,7 @@ namespace almarith_project
 
         private void Save_Click(object sender, EventArgs e)
         {
-            if (Edit.Enabled == false||true) {
+           
 
                 try {
                     if (Edit.Enabled ==  true)
@@ -636,14 +636,9 @@ namespace almarith_project
                         c = new SqlCommand("delete from Table_2 where ID_elmotawfi = '" + selectedrow_ID + "'", sql);
                         c.ExecuteNonQuery();
                         sql.Close();
-
                     }
 
-
-
-
-
-                        SqlCommand cm = new SqlCommand();
+                    SqlCommand cm = new SqlCommand();
                     cm = new SqlCommand("insert into Table_2(terka,name_elmotawfi,ID_elmotawfi,kind_ofelmtawfi) values(@terka,@name_elmotawfi,@ID_elmotawfi,@kind_ofelmtawfi)", sql);
                     cm.Parameters.Add(new SqlParameter("@ID_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = ID_Elmwtafi.Text;
                     cm.Parameters.Add(new SqlParameter("@terka", System.Data.SqlDbType.Money)).Value = Convert.ToDouble(Tarka.Text);
@@ -685,77 +680,15 @@ namespace almarith_project
                         sql.Close();
                     load();
                 }
+
+      if (Edit.Enabled==true)
+            {
+                MessageBox.Show(" تم حفظ التعديلات بنجاح"); 
+            }
+            if (Edit.Enabled == true)
+            {
                 MessageBox.Show(" تم حفظ البيانات بنجاح");
-
             }
-            else if (Edit .Enabled == false) {
-                try
-                {
-                    String sex = (Male.Checked ? "ذكر" : "انثى");
-                    SqlCommand cm = new SqlCommand();
-                    cm = new SqlCommand("update Table_2 set [terka] ='"+Convert.ToDouble(Tarka.Text)+ "',[kind_ofelmtawfi]='"+sex+"',[name_elmotawfi]='"+Name_elmotawfi.Text+"'FROM[inharitance_calc].[dbo].[Table_2] where ID_elmotawfi = '"+ID_Elmwtafi.Text+"'", sql);
-                    sql.Open();
-                    cm.ExecuteNonQuery();
-                   foreach (DataGridViewRow item in dataGridView1.Rows)
-                    {
-
-                        Double value = Convert.ToDouble(item?.Cells[0]?.Value?.ToString());
-                        string inharitance_ratio = item?.Cells[1]?.Value?.ToString();
-                        string relation = item?.Cells[4]?.Value?.ToString();
-                        string ID = item?.Cells[2]?.Value?.ToString();
-                        string name = item?.Cells[3]?.Value?.ToString();
-                        SqlCommand cmm = new SqlCommand();
-                        cmm = new SqlCommand("update Tb1 set[inheritance_ratio] = '"+inharitance_ratio+"',[relation] = '"+relation+"',[ID]= '"+ID+"',[name]='"+name+"',value = '"+value+"' FROM[inharitance_calc].[dbo].[Tb1] where ID_elmotawfi = '"+ID_Elmwtafi.Text+"'", sql);
-                         cm.ExecuteNonQuery();
-                       
-                       
-                    }
-               
-
-                    sql.Close(); 
-                     load();
-                  
-                   
-                    
-
-                }
-                catch
-                {
-                    if (sql.State == ConnectionState.Open)
-                        load();
-                    sql.Close();
-                }
-
-                load();
-                MessageBox.Show(" تم تعديل البيانات بنجاح");
-
-
-
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
 

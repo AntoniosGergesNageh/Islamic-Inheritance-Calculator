@@ -68,9 +68,9 @@
             this.panel1.Controls.Add(this.Delete);
             this.panel1.Controls.Add(this.Cancel);
             this.panel1.Controls.Add(this.newmotawfi);
-            this.panel1.Location = new System.Drawing.Point(0, 1);
+            this.panel1.Location = new System.Drawing.Point(8, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(785, 58);
+            this.panel1.Size = new System.Drawing.Size(767, 58);
             this.panel1.TabIndex = 98;
             // 
             // Save
@@ -170,7 +170,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(27, 146);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(684, 260);
+            this.dataGridView1.Size = new System.Drawing.Size(763, 260);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -179,24 +179,26 @@
             this.take.HeaderText = "النصيب";
             this.take.Name = "take";
             this.take.ReadOnly = true;
+            this.take.Width = 120;
             // 
             // The_ratio
             // 
             this.The_ratio.HeaderText = "نسبة الورث";
             this.The_ratio.Name = "The_ratio";
             this.The_ratio.ReadOnly = true;
+            this.The_ratio.Width = 120;
             // 
             // ID
             // 
             this.ID.HeaderText = "رقم البطاقه";
             this.ID.Name = "ID";
-            this.ID.Width = 140;
+            this.ID.Width = 180;
             // 
             // الاسم
             // 
             this.الاسم.HeaderText = "الاسم";
             this.الاسم.Name = "الاسم";
-            this.الاسم.Width = 150;
+            this.الاسم.Width = 200;
             // 
             // relation
             // 
@@ -224,7 +226,7 @@
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowTemplate.Height = 25;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(684, 249);
+            this.dataGridView2.Size = new System.Drawing.Size(763, 249);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
             this.dataGridView2.Click += new System.EventHandler(this.dataGridView2_Click);
@@ -280,7 +282,7 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.CadetBlue;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(48, 66);
+            this.label5.Location = new System.Drawing.Point(41, 74);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 20);
             this.label5.TabIndex = 119;
@@ -319,7 +321,7 @@
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.CadetBlue;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(215, 65);
+            this.label6.Location = new System.Drawing.Point(211, 69);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(120, 25);
             this.label6.TabIndex = 116;
@@ -336,7 +338,7 @@
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowTemplate.Height = 25;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView3.Size = new System.Drawing.Size(684, 260);
+            this.dataGridView3.Size = new System.Drawing.Size(763, 260);
             this.dataGridView3.TabIndex = 125;
             // 
             // label2
@@ -344,7 +346,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.CadetBlue;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(391, 66);
+            this.label2.Location = new System.Drawing.Point(391, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(102, 25);
             this.label2.TabIndex = 127;
@@ -354,7 +356,7 @@
             // 
             this.Tarka.AccessibleName = "tarka";
             this.Tarka.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.Tarka.Location = new System.Drawing.Point(33, 96);
+            this.Tarka.Location = new System.Drawing.Point(41, 107);
             this.Tarka.MaxLength = 10;
             this.Tarka.Name = "Tarka";
             this.Tarka.Size = new System.Drawing.Size(111, 23);
@@ -397,7 +399,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(742, 749);
+            this.ClientSize = new System.Drawing.Size(877, 749);
             this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.search);
             this.Controls.Add(this.Tarka);
@@ -442,14 +444,14 @@
         private RadioButton Male;
         private Label label6;
         private DataGridView dataGridView3;
+        private Label label2;
+        private TextBox Tarka;
+        private TextBox search;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private DataGridViewTextBoxColumn take;
         private DataGridViewTextBoxColumn The_ratio;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn الاسم;
         private DataGridViewComboBoxColumn relation;
-        private Label label2;
-        private TextBox Tarka;
-        private TextBox search;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }
