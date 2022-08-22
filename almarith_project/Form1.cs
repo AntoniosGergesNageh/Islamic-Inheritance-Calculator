@@ -10,6 +10,7 @@ namespace almarith_project
         public Form1()
         {
             InitializeComponent();
+            dataGridView1.Visible = false;
             Save.Enabled = false;
             Cancel.Enabled = false;
             Tarka.Enabled = false;
@@ -28,13 +29,8 @@ namespace almarith_project
 
         }
         
-        Form2 form2 = new Form2();
-        UserControl1 userControl1 = new UserControl1();
 
-        private void tarka_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
+       
 
 
         private void guna2Button1_Click(object sender, EventArgs e)
@@ -112,7 +108,7 @@ namespace almarith_project
             double rem_aft_dau_share = 0;
             double x_share = 0;
             double rem_share = 0;
-            double total_share = Int32.Parse(Tarka.Text);
+            double total_share = Convert.ToDouble (Tarka.Text) ;
             int num_of_sons = 0;
             int num_of_daugthers = 0;
             int father = 0;
@@ -538,15 +534,7 @@ namespace almarith_project
 
 
 
-                form2.the_rest.Text = Convert.ToString(rem_share);
-                form2.brostaks.Text = Convert.ToString(brother_share);
-                form2.sistaks.Text = Convert.ToString(sister_share);
-                form2.sonstake.Text = Convert.ToString(sons_shares);
-                form2.daughterstake.Text = Convert.ToString(daughters_shares);
-                form2.husbandtaks.Text = Convert.ToString(husband_share);
-                form2.mothertake.Text = Convert.ToString(mother_share);
-                form2.fathertake.Text = Convert.ToString(father_share);
-                double onewife = Math.Round(wives_share / num_of_wives);
+                
 
             }
 
@@ -629,76 +617,200 @@ namespace almarith_project
 
         private void Save_Click(object sender, EventArgs e)
         {
-           try {  
-            SqlCommand cm = new SqlCommand();
-                cm = new SqlCommand("insert into Table_2(terka,name_elmotawfi,ID_elmotawfi,kind_ofelmtawfi) values(@terka,@name_elmotawfi,@ID_elmotawfi,@kind_ofelmtawfi)", sql);
-                cm.Parameters.Add(new SqlParameter("@ID_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = ID_Elmwtafi.Text;
-                cm.Parameters.Add(new SqlParameter("@terka", System.Data.SqlDbType.Money)).Value = Convert.ToDouble(Tarka.Text);
-                cm.Parameters.Add(new SqlParameter("@name_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = Name_elmotawfi.Text;
-                String sex = (Male.Checked ? "ذكر" : "انثى");
-                cm.Parameters.Add(new SqlParameter("@kind_ofelmtawfi", System.Data.SqlDbType.NVarChar)).Value = sex;
-                sql.Open();
-                cm.ExecuteNonQuery();
-                sql.Close();
-                foreach (DataGridViewRow item in dataGridView1.Rows)
-                {
+            if (Edit.Enabled == false||true) {
+
+                try {
+                    if (Edit.Enabled ==  true)
+                    {
+                        int numodselectedrow = dataGridView2.CurrentCell.RowIndex;
+                        int C = dataGridView2.CurrentRow.Index;
+                        string selectedrow_ID = dataGridView2.Rows[numodselectedrow].Cells[0].Value.ToString();
+                        SqlCommand c = new SqlCommand();
+
+                        SqlDataAdapter da = new SqlDataAdapter("delete from Tb1 where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
 
 
-                    Double value = Convert.ToDouble(item?.Cells[0]?.Value?.ToString());
-                    string inharitance_ratio = item?.Cells[1]?.Value?.ToString();
-                   
-                    string relation = item?.Cells[4]?.Value?.ToString();
+                        c = new SqlCommand("delete from Tb1 where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
+                        sql.Open();
+                        c.ExecuteNonQuery();
+                        c = new SqlCommand("delete from Table_2 where ID_elmotawfi = '" + selectedrow_ID + "'", sql);
+                        c.ExecuteNonQuery();
+                        sql.Close();
 
-                    string ID = item?.Cells[2]?.Value?.ToString();
-                    string name = item?.Cells[3]?.Value?.ToString();
-                  
+                    }
+
+
+
+
+
+                        SqlCommand cm = new SqlCommand();
+                    cm = new SqlCommand("insert into Table_2(terka,name_elmotawfi,ID_elmotawfi,kind_ofelmtawfi) values(@terka,@name_elmotawfi,@ID_elmotawfi,@kind_ofelmtawfi)", sql);
+                    cm.Parameters.Add(new SqlParameter("@ID_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = ID_Elmwtafi.Text;
+                    cm.Parameters.Add(new SqlParameter("@terka", System.Data.SqlDbType.Money)).Value = Convert.ToDouble(Tarka.Text);
+                    cm.Parameters.Add(new SqlParameter("@name_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = Name_elmotawfi.Text;
+                    String sex = (Male.Checked ? "ذكر" : "انثى");
+                    cm.Parameters.Add(new SqlParameter("@kind_ofelmtawfi", System.Data.SqlDbType.NVarChar)).Value = sex;
+                    sql.Open();
+                    cm.ExecuteNonQuery();
+                    sql.Close();
+                    foreach (DataGridViewRow item in dataGridView1.Rows)
+                    {
+
+
+                        Double value = Convert.ToDouble(item?.Cells[0]?.Value?.ToString());
+                        string inharitance_ratio = item?.Cells[1]?.Value?.ToString();
+                        string relation = item?.Cells[4]?.Value?.ToString();
+                        string ID = item?.Cells[2]?.Value?.ToString();
+                        string name = item?.Cells[3]?.Value?.ToString();
+
                         cm = new SqlCommand("insert into Tb1(ID,name,inheritance_ratio,relation,value,ID_elmotawfi) values(@ID,@name,@inharitance_ratio ,@relation,@value,@ID_elmotawfi)", sql);
-                        cm.Parameters.Add(new SqlParameter("@ID", System.Data.SqlDbType.VarChar)).Value = ID;
-                        cm.Parameters.Add(new SqlParameter("@name", System.Data.SqlDbType.VarChar)).Value = name;
-                        cm.Parameters.Add(new SqlParameter("@inharitance_ratio", System.Data.SqlDbType.VarChar)).Value = inharitance_ratio;
+                        cm.Parameters.Add(new SqlParameter("@ID", System.Data.SqlDbType.NVarChar)).Value = ID;
+                        cm.Parameters.Add(new SqlParameter("@name", System.Data.SqlDbType.NVarChar)).Value = name;
+                        cm.Parameters.Add(new SqlParameter("@inharitance_ratio", System.Data.SqlDbType.NVarChar)).Value = inharitance_ratio;
                         cm.Parameters.Add(new SqlParameter("@relation", System.Data.SqlDbType.NVarChar)).Value = relation;
                         cm.Parameters.Add(new SqlParameter("@value", System.Data.SqlDbType.Money)).Value = value;
                         cm.Parameters.Add(new SqlParameter("@ID_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = ID_Elmwtafi.Text;
                         sql.Open();
                         cm.ExecuteNonQuery();
                         sql.Close();
-                        MessageBox.Show(" the values has been added into sql");
-                        load();
-                        update.Enabled = false;
-                } 
-                
+                       
+                      
+                    }
+                   
+
+                }
+                catch
+                {
+                    if (sql.State == ConnectionState.Open)
+                        sql.Close();
+                    load();
+                }
+                MessageBox.Show(" تم حفظ البيانات بنجاح");
 
             }
-            catch
-            {
-                if( sql.State == ConnectionState.Open)
-                sql.Close();
+            else if (Edit .Enabled == false) {
+                try
+                {
+                    String sex = (Male.Checked ? "ذكر" : "انثى");
+                    SqlCommand cm = new SqlCommand();
+                    cm = new SqlCommand("update Table_2 set [terka] ='"+Convert.ToDouble(Tarka.Text)+ "',[kind_ofelmtawfi]='"+sex+"',[name_elmotawfi]='"+Name_elmotawfi.Text+"'FROM[inharitance_calc].[dbo].[Table_2] where ID_elmotawfi = '"+ID_Elmwtafi.Text+"'", sql);
+                    sql.Open();
+                    cm.ExecuteNonQuery();
+                   foreach (DataGridViewRow item in dataGridView1.Rows)
+                    {
+
+                        Double value = Convert.ToDouble(item?.Cells[0]?.Value?.ToString());
+                        string inharitance_ratio = item?.Cells[1]?.Value?.ToString();
+                        string relation = item?.Cells[4]?.Value?.ToString();
+                        string ID = item?.Cells[2]?.Value?.ToString();
+                        string name = item?.Cells[3]?.Value?.ToString();
+                        SqlCommand cmm = new SqlCommand();
+                        cmm = new SqlCommand("update Tb1 set[inheritance_ratio] = '"+inharitance_ratio+"',[relation] = '"+relation+"',[ID]= '"+ID+"',[name]='"+name+"',value = '"+value+"' FROM[inharitance_calc].[dbo].[Tb1] where ID_elmotawfi = '"+ID_Elmwtafi.Text+"'", sql);
+                         cm.ExecuteNonQuery();
+                       
+                       
+                    }
+               
+
+                    sql.Close(); 
+                     load();
+                  
+                   
+                    
+
+                }
+                catch
+                {
+                    if (sql.State == ConnectionState.Open)
+                        load();
+                    sql.Close();
+                }
+
+                load();
+                MessageBox.Show(" تم تعديل البيانات بنجاح");
+
+
+
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
 
 
         private void Edit_Click(object sender, EventArgs e)
         {
-            dataGridView1.Visible = true;
 
-            foreach (DataGridViewRow item in dataGridView3.Rows)
+            update.Enabled = true;
+            
+            Delete.Enabled = false;
+            Save.Enabled = true;
+            Edit.Enabled = true;
+            Cancel.Enabled = true;
+            Tarka.Enabled = true;
+            Male.Enabled = true;
+            Female.Enabled = true;
+            Name_elmotawfi.Enabled = true;
+            ID_Elmwtafi.Enabled = false;
+            dataGridView1.Visible = true;
+            dataGridView3.Visible = false;
+            int i = 0;
+            try
             {
+                for (int ii = 0; ii < dataGridView3.RowCount; ii++)
+                {
+                DataGridViewRow row = new DataGridViewRow();
+                dataGridView1.Rows.Add(row);
+                }
+             
                 foreach (DataGridViewRow it in dataGridView1.Rows)
                 {
 
-                    it.Cells[4].Value = item?.Cells[2]?.Value?.ToString();
-                    it.Cells[1].Value = item?.Cells[3]?.Value?.ToString();
-                    it.Cells[0].Value = item?.Cells[4]?.Value?.ToString();
-                    it.Cells[3].Value = item?.Cells[0]?.Value?.ToString();
-                    it.Cells[2].Value = item?.Cells[1]?.Value?.ToString();
-                   
+                    it.Cells[0].Value = dataGridView3.Rows[i].Cells[0]?.Value?.ToString();
+                    it.Cells[1].Value = dataGridView3.Rows[i].Cells[1]?.Value?.ToString();
+                    it.Cells[2].Value = dataGridView3.Rows[i].Cells[2]?.Value?.ToString();
+                    it.Cells[3].Value = dataGridView3.Rows[i].Cells[3]?.Value?.ToString();
+                    it.Cells[4].Value = dataGridView3.Rows[i].Cells[4]?.Value?.ToString();
+                    
+                    i++;
+
                 }
-
             }
 
-            }
+            catch { }
 
+
+
+
+
+
+
+
+
+
+        }
             // methode to load data from elmotawfi table 
             public void load()
         {
@@ -714,22 +826,17 @@ namespace almarith_project
         private void dataGridView2_Click(object sender, EventArgs e)
         {
             sql.Open();
-            
-            dataGridView3.Columns.Clear(); 
-            
-            
-           // dataGridView1.Visible = false; 
-           // dataGridView3.Visible = true;
-        
+            dataGridView3.Columns.Clear();
+            dataGridView1.Visible = false;
+            dataGridView3.Visible = true;
+
 
             int numodselectedrow = dataGridView2.CurrentCell.RowIndex;
 
             string selectedrow_ID = dataGridView2.Rows[numodselectedrow].Cells[0].Value.ToString();
-
-
-
-            
-Tarka.Text =  dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString();
+            double TERka = Convert.ToDouble(dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString());
+            TERka = Math.Round(TERka , 2); 
+            Tarka.Text =TERka.ToString();
             Male.Checked = (dataGridView2.Rows[numodselectedrow].Cells[2].Value.ToString()=="ذكر"? true : false) ;
             Female.Checked = (dataGridView2.Rows[numodselectedrow].Cells[2].Value.ToString() == "انثى" ? true : false);
             ID_Elmwtafi.Text = dataGridView2.Rows[numodselectedrow].Cells[0].Value.ToString();
@@ -737,11 +844,12 @@ Tarka.Text =  dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString();
            
            foreach (DataGridViewRow item in dataGridView1.Rows)
             {
-                SqlDataAdapter da = new SqlDataAdapter("select t.name,t.ID,t.relation,t.inheritance_ratio,t.value from Tb1 t where ID_elmotawfi ='"+ selectedrow_ID+"'", sql);
+                SqlDataAdapter da = new SqlDataAdapter("select t.value as 'النصيب', t.inheritance_ratio as 'نسبة الورث', t.ID as ' رقم البطاقه '   , t.name as'الاسم' ,t.relation as 'صلة القرابه'from Tb1 t where ID_elmotawfi ='"+ selectedrow_ID+"'", sql);
 
                 DataTable dbt = new DataTable();
                 da.Fill(dbt);
                 dataGridView3.DataSource = dbt;
+                
                 sql.Close();
             }
 
@@ -778,18 +886,18 @@ Tarka.Text =  dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString();
             }
          }
 
-        private void dataGridView3_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
+     
         private void Cancel_Click(object sender, EventArgs e)
         {
             dataGridView2.Enabled = true;
             Save.Enabled = false;
             Delete.Enabled = true;
             Edit.Enabled =true;
-            dataGridView1.Rows.Clear();
+
+            try
+            {
+                dataGridView3.Rows.Clear();
+            }catch { }
             Tarka.Text = null;
             Name_elmotawfi.Text = null;
             ID_Elmwtafi.Text = null;
@@ -801,5 +909,94 @@ Tarka.Text =  dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString();
         {
 
         }
+
+       
+        private void Tarka_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+       
+
+        private void guna2Button1_Click_1(object sender, EventArgs e)
+        {
+
+           
+            dataGridView3.Columns.Clear();
+            dataGridView1.Visible = false;
+            dataGridView3.Visible = true;
+
+
+        
+
+            string selectedrow_ID = search.Text;
+            // شوف ال input 
+            // double TERka = Convert.ToDouble(dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString());
+            // TERka = Math.Round(TERka, 2);
+            //Tarka.Text = TERka.ToString();
+            //SqlCommand cm = new SqlCommand();
+            //cm = new SqlCommand("select terka from Table_2 where ID_elmotawfi = '" + selectedrow_ID + "'", sql);
+            //sql.Open(); 
+
+            //Tarka.Text=cm.ExecuteNonQuery().ToString() ;
+            //SqlCommand cmm = new SqlCommand();
+            //cmm = new SqlCommand("select kind_ofelmtawfi from Table_2 where ID_elmotawfi = '"+selectedrow_ID+"'", sql);
+
+            //Male.Checked = (cmm.ExecuteNonQuery().ToString() == "ذكر" ? true : false);
+            //Female.Checked = (cmm.ExecuteNonQuery().ToString() == "انثى" ? true : false);
+            //ID_Elmwtafi.Text = selectedrow_ID;
+            //SqlCommand cmmm = new SqlCommand();
+            //cmmm = new SqlCommand("select name_elmotawfi from Table_2 where ID_elmotawfi = '" + selectedrow_ID + "'", sql);
+            //Name_elmotawfi.Text = cmmm.ExecuteNonQuery().ToString();
+            ID_Elmwtafi.Text = search.Text; 
+
+            SqlCommand cm = new SqlCommand("select terka,kind_ofelmtawfi,name_elmotawfi from Table_2 where ID_elmotawfi = @selectedrow_ID", sql);
+            sql.Open();
+            cm.Parameters.AddWithValue("@selectedrow_ID",search.Text);
+            SqlDataReader Da = cm.ExecuteReader (); 
+            while ( Da.Read())
+            {
+                Name_elmotawfi.Text = Da.GetValue(2).ToString();
+               Tarka.Text = Da.GetValue(0).ToString();
+                Male.Checked = (Da.GetValue(1).ToString() == "ذكر" ? true : false);
+                Female.Checked = (Da.GetValue(1).ToString() == "انثى" ? true : false);
+            }
+            sql.Close();
+
+
+
+
+
+
+
+
+
+
+
+            foreach (DataGridViewRow item in dataGridView1.Rows)
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select t.value as 'النصيب', t.inheritance_ratio as 'نسبة الورث', t.ID as ' رقم البطاقه '   , t.name as'الاسم' ,t.relation as 'صلة القرابه'from Tb1 t where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
+
+                DataTable dbt = new DataTable();
+                da.Fill(dbt);
+                dataGridView3.DataSource = dbt;
+
+                sql.Close();
+            }
+            Name_elmotawfi.Enabled = false;
+
+
+            if (dataGridView3.Rows.Count==0)
+            {
+                ID_Elmwtafi.Text = search.Text;
+
+                MessageBox.Show("لا يوجد بيانات مخزنه برقم البطاقه:"+ search.Text, "خطأ", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+
+
+        }
+
+      
     }
+
 }
