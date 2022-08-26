@@ -3,7 +3,7 @@ using System.Data;
 namespace almarith_project
 {
     public partial class Form1 : Form
-    {   
+    {
         SqlConnection sql = new SqlConnection(@"Data Source=.;Initial Catalog=inharitance_calc;Integrated Security=True;");
         DataTable dt = new DataTable();
         DataTable dt1 = new DataTable();
@@ -12,14 +12,17 @@ namespace almarith_project
             InitializeComponent();
             dataGridView1.Visible = false;
             Save.Enabled = false;
+            Delete.Enabled = false;
+            Edit.Enabled = false; 
             Cancel.Enabled = false;
             Tarka.Enabled = false;
             Male.Enabled = false;
             Female.Enabled = false;
             Name_elmotawfi.Enabled = false;
-            ID_Elmwtafi.Enabled = false; 
+            ID_Elmwtafi.Enabled = false;
+            update.Enabled = false;
             load();
-            Male.Checked = true; 
+            Male.Checked = true;
             dataGridView2.AutoGenerateColumns = false;
             dataGridView2.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView2.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -28,13 +31,14 @@ namespace almarith_project
 
 
         }
-        
 
-       
+
+
 
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
+            textBox1.Enabled = false;
             update.Enabled = true;
             Tarka.Text = null;
             Name_elmotawfi.Text = null;
@@ -53,7 +57,7 @@ namespace almarith_project
             dataGridView1.Visible = true;
             dataGridView3.Visible = false;
             dataGridView1.Columns.Clear();
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnCount = 4;
 
 
@@ -63,16 +67,18 @@ namespace almarith_project
 
             DataGridViewComboBoxColumn cmb = new DataGridViewComboBoxColumn();
             cmb.HeaderText = "صلة القرابه";
-         cmb.Name = "cmb";
-         cmb.MaxDropDownItems = 3;
+            cmb.Name = "cmb";
+            cmb.MaxDropDownItems = 3;
             cmb.Items.Add("ابن");
             cmb.Items.Add("ابنه");
             cmb.Items.Add("اب"); cmb.Items.Add("ام"); cmb.Items.Add("اخ"); cmb.Items.Add("اخت");
-            
-          cmb.Items.Add("زوج"); 
-             cmb.Items.Add("زوجه"); 
+
+            cmb.Items.Add("زوج");
+            cmb.Items.Add("زوجه");
             dataGridView1.Columns.Add(cmb);
             dataGridView1.Columns[3].Name = "الاسم";
+            added.Enabled = false;
+            
 
         }
 
@@ -86,7 +92,7 @@ namespace almarith_project
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-                dataGridView2.AutoGenerateColumns = true;
+            dataGridView2.AutoGenerateColumns = true;
         }
 
 
@@ -108,7 +114,7 @@ namespace almarith_project
             double rem_aft_dau_share = 0;
             double x_share = 0;
             double rem_share = 0;
-            double total_share = Convert.ToDouble (Tarka.Text) ;
+            double total_share = Convert.ToDouble(Tarka.Text);
             int num_of_sons = 0;
             int num_of_daugthers = 0;
             int father = 0;
@@ -146,7 +152,7 @@ namespace almarith_project
                 else if (item?.Cells[4]?.Value?.ToString() == "زوجه")
                 {
                     num_of_wives++;
-                    
+
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "اب")
                 {
@@ -357,7 +363,7 @@ namespace almarith_project
                 rem_share = total_PRS - (sons_shares + daughters_shares + mother_share + father_share + husband_share + brother_share + sister_share);
                 Math.Round(rem_share); Math.Round(brother_share); Math.Round(sister_share); Math.Round(sons_shares); Math.Round(daughters_shares); Math.Round(husband_share); Math.Round(mother_share); Math.Round(father_share); Math.Round(wives_share);
 
-               
+
 
 
             }
@@ -529,98 +535,151 @@ namespace almarith_project
 
                 rem_share = total_PRS - (sons_shares + daughters_shares + mother_share + father_share + wives_share + brother_share + sister_share);
 
-                rem_share = Math.Round(rem_share); brother_share = Math.Round(brother_share); sister_share = Math.Round(sister_share); sons_shares = Math.Round(sons_shares); daughters_shares = Math.Round(daughters_shares); husband_share = Math.Round(husband_share); mother_share = Math.Round(mother_share); father_share = Math.Round(father_share); wives_share = Math.Round(wives_share);
-
-
-
-
-                
-
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+             }
 
             // insert every one's value..!
             foreach (DataGridViewRow item in dataGridView1.Rows)
             {
                 if (item?.Cells[4]?.Value?.ToString() == "ابن")
+                    
                 {
-                  
-                    item.Cells[0].Value = sons_shares / num_of_sons;
-                    item.Cells[1].Value = ((sons_shares / num_of_sons) / total_share) * 100 + "%";
+
+                    item.Cells[0].Value = Math.Round(sons_shares / num_of_sons, 3) ;
+                    item.Cells[1].Value = Math.Round(((sons_shares / num_of_sons) / total_share) * 100 , 3)+ "%";
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "ابنه")
                 {
-                    item.Cells[0].Value = daughters_shares / num_of_daugthers;
-                    item.Cells[1].Value = ((daughters_shares / num_of_daugthers) / total_share) * 100 + "%";
+                    item.Cells[0].Value = Math.Round(daughters_shares / num_of_daugthers, 3);
+                    item.Cells[1].Value = Math.Round(((daughters_shares / num_of_daugthers) / total_share) * 100, 3) + "%";
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "اخ")
                 {
-                    item.Cells[0].Value = brother_share / num_of_bro;
-                    item.Cells[1].Value = ((brother_share / num_of_bro) / total_share) * 100 + "%";
+                    item.Cells[0].Value = Math.Round(brother_share / num_of_bro, 3);
+                    item.Cells[1].Value = Math.Round(((brother_share / num_of_bro) / total_share) * 100, 3) + "%";
 
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "اخت")
                 {
-                    item.Cells[0].Value = sister_share / num_of_sis;
-                    item.Cells[1].Value = ((sister_share / num_of_sis) / total_share) * 100 + "%";
+                    item.Cells[0].Value = Math.Round(sister_share / num_of_sis, 3);
+                    item.Cells[1].Value = Math.Round(((sister_share / num_of_sis) / total_share)*  100, 3) + "%";
 
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "زوجه")
                 {
-                    item.Cells[0].Value = wives_share / num_of_wives;
-                    item.Cells[1].Value = ((wives_share / num_of_wives) / total_share) * 100 + "%";
+                    item.Cells[0].Value = Math.Round(wives_share / num_of_wives, 3);
+                    item.Cells[1].Value = Math.Round(((wives_share / num_of_wives) / total_share) * 100, 3) + "%";
 
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "اب")
                 {
-                    item.Cells[0].Value = father_share / father;
-                    item.Cells[1].Value = ((father_share / father) / total_share) * 100 + "%";
+                    item.Cells[0].Value = Math.Round(father_share / father, 3);
+                    item.Cells[1].Value = Math.Round(((father_share / father) / total_share) * 100 , 3)+ "%";
 
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "ام")
                 {
-                    item.Cells[0].Value = mother_share / mother;
-                    item.Cells[1].Value = ((mother_share / mother) / total_share) * 100 + "%";
+                    item.Cells[0].Value = Math.Round(mother_share / mother, 3);
+                    item.Cells[1].Value = Math.Round(((mother_share / mother) / total_share)* 100, 3) + "%";
 
                 }
                 else if (item?.Cells[4]?.Value?.ToString() == "زوج")
                 {
-                    item.Cells[0].Value = husband_share / husband;
-                    item.Cells[1].Value = ((husband_share / husband) / total_share) * 100 + "%";
+                    item.Cells[0].Value = Math.Round(husband_share / husband, 3);
+                    item.Cells[1].Value = Math.Round(((husband_share / husband) / total_share) * 100, 3) + "%";
 
                 }
             }
 
-            //string ginselmotawfi = (Female.Checked == true ? "انثى" : "ذكر");
-            //dataGridView2.Rows.Add(Tarka.Text, ginselmotawfi, ID_Elmwtafi.Text, Name_elmotawfi.Text);
-           }
+        }
 
 
 
         private void Save_Click(object sender, EventArgs e)
         {
-           
+            
+            if (Name_elmotawfi.TextLength <3 ) { MessageBox.Show("برجاء ادخال اسم المتوفي" );  return;  };
+            if ( ID_Elmwtafi.TextLength !=0 && ID_Elmwtafi.TextLength != 14 ) { MessageBox.Show(" برجاء ادخال رقم بطاقة المتوفي بشكل صحيح"); return; };
+            if (ID_Elmwtafi.TextLength ==0) { MessageBox.Show("برجاء ادخال رقم بطاقة المتوفي "); return; };
+            if (Tarka.TextLength == 0) { MessageBox.Show("برجاء ادخال قيمة التركه"); return; };
+            
 
-                try {
-                    if (Edit.Enabled ==  true)
+
+
+
+            if (Edit.Enabled == true)
+            {
+
+                try
+                {
+                    if (Edit.Enabled == true)
+                    {
+                        int numodselectedrow = dataGridView2.CurrentCell.RowIndex;
+                        int C = dataGridView2.CurrentRow.Index;
+                        string selectedrow_ID = textBox1.Text;
+                        SqlCommand c = new SqlCommand();
+
+                        SqlDataAdapter da = new SqlDataAdapter("delete from Tb1 where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
+
+
+                        c = new SqlCommand("delete from Tb1 where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
+                        sql.Open();
+                        c.ExecuteNonQuery();
+                        c = new SqlCommand("delete from Table_2 where ID_elmotawfi = '" + selectedrow_ID + "'", sql);
+                        c.ExecuteNonQuery();
+                        sql.Close();
+                    }
+
+                    SqlCommand cm = new SqlCommand();
+                    cm = new SqlCommand("insert into Table_2(terka,name_elmotawfi,ID_elmotawfi,kind_ofelmtawfi) values(@terka,@name_elmotawfi,@ID_elmotawfi,@kind_ofelmtawfi)", sql);
+                    cm.Parameters.Add(new SqlParameter("@ID_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = ID_Elmwtafi.Text;
+                    cm.Parameters.Add(new SqlParameter("@terka", System.Data.SqlDbType.Money)).Value = Convert.ToDouble(Tarka.Text);
+                    cm.Parameters.Add(new SqlParameter("@name_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = Name_elmotawfi.Text;
+                    String sex = (Male.Checked ? "ذكر" : "انثى");
+                    cm.Parameters.Add(new SqlParameter("@kind_ofelmtawfi", System.Data.SqlDbType.NVarChar)).Value = sex;
+                    sql.Open();
+                    cm.ExecuteNonQuery();
+                    sql.Close();
+                    foreach (DataGridViewRow item in dataGridView1.Rows)
+                    {
+
+
+                        Double value = Convert.ToDouble(item?.Cells[0]?.Value?.ToString());
+                        string inharitance_ratio = item?.Cells[1]?.Value?.ToString();
+                        string relation = item?.Cells[4]?.Value?.ToString();
+                        string ID = item?.Cells[2]?.Value?.ToString();
+                        string name = item?.Cells[3]?.Value?.ToString();
+
+                        cm = new SqlCommand("insert into Tb1(ID,name,inheritance_ratio,relation,value,ID_elmotawfi) values(@ID,@name,@inharitance_ratio ,@relation,@value,@ID_elmotawfi)", sql);
+                        cm.Parameters.Add(new SqlParameter("@ID", System.Data.SqlDbType.NVarChar)).Value = ID;
+                        cm.Parameters.Add(new SqlParameter("@name", System.Data.SqlDbType.NVarChar)).Value = name;
+                        cm.Parameters.Add(new SqlParameter("@inharitance_ratio", System.Data.SqlDbType.NVarChar)).Value = inharitance_ratio;
+                        cm.Parameters.Add(new SqlParameter("@relation", System.Data.SqlDbType.NVarChar)).Value = relation;
+                        cm.Parameters.Add(new SqlParameter("@value", System.Data.SqlDbType.Money)).Value = value;
+                        cm.Parameters.Add(new SqlParameter("@ID_elmotawfi", System.Data.SqlDbType.NVarChar)).Value = ID_Elmwtafi.Text;
+                        sql.Open();
+                        cm.ExecuteNonQuery();
+                        sql.Close();
+
+
+                    }
+
+
+                }
+                catch
+                {
+                    if (sql.State == ConnectionState.Open)
+                        sql.Close();
+                    load();
+                }
+
+                MessageBox.Show(" تم حفظ التعديلات بنجاح");
+            }
+            if (Edit.Enabled == false)
+            {
+
+                try
+                {
+                    if (Edit.Enabled == true)
                     {
                         int numodselectedrow = dataGridView2.CurrentCell.RowIndex;
                         int C = dataGridView2.CurrentRow.Index;
@@ -668,10 +727,10 @@ namespace almarith_project
                         sql.Open();
                         cm.ExecuteNonQuery();
                         sql.Close();
-                       
-                      
+
+
                     }
-                   
+
 
                 }
                 catch
@@ -681,14 +740,15 @@ namespace almarith_project
                     load();
                 }
 
-      if (Edit.Enabled==true)
-            {
-                MessageBox.Show(" تم حفظ التعديلات بنجاح"); 
-            }
-            if (Edit.Enabled == true)
-            {
+
                 MessageBox.Show(" تم حفظ البيانات بنجاح");
             }
+            textBox1.Enabled = true; 
+            Save.Enabled = false;
+            added.Enabled = true;
+            string curent_id  = ID_Elmwtafi.Text; 
+            textBox1.Text = null;
+            textBox1.Text = curent_id; 
         }
 
 
@@ -697,7 +757,7 @@ namespace almarith_project
         {
 
             update.Enabled = true;
-            
+
             Delete.Enabled = false;
             Save.Enabled = true;
             Edit.Enabled = true;
@@ -706,7 +766,7 @@ namespace almarith_project
             Male.Enabled = true;
             Female.Enabled = true;
             Name_elmotawfi.Enabled = true;
-            ID_Elmwtafi.Enabled = false;
+            ID_Elmwtafi.Enabled = true;
             dataGridView1.Visible = true;
             dataGridView3.Visible = false;
             int i = 0;
@@ -714,10 +774,10 @@ namespace almarith_project
             {
                 for (int ii = 0; ii < dataGridView3.RowCount; ii++)
                 {
-                DataGridViewRow row = new DataGridViewRow();
-                dataGridView1.Rows.Add(row);
+                    DataGridViewRow row = new DataGridViewRow();
+                    dataGridView1.Rows.Add(row);
                 }
-             
+
                 foreach (DataGridViewRow it in dataGridView1.Rows)
                 {
 
@@ -726,63 +786,60 @@ namespace almarith_project
                     it.Cells[2].Value = dataGridView3.Rows[i].Cells[2]?.Value?.ToString();
                     it.Cells[3].Value = dataGridView3.Rows[i].Cells[3]?.Value?.ToString();
                     it.Cells[4].Value = dataGridView3.Rows[i].Cells[4]?.Value?.ToString();
-                    
+
                     i++;
 
                 }
             }
 
             catch { }
-
-
-
-
-
-
-
-
-
-
-        }
-            // methode to load data from elmotawfi table 
-            public void load()
+   }
+        // methode to load data from elmotawfi table 
+        public void load()
         {
-           
-            sql.Open(); 
+
+            sql.Open();
             SqlDataAdapter da = new SqlDataAdapter("SELECT ID_elmotawfi AS رقم_البطاقه, name_elmotawfi  As الاسم, kind_ofelmtawfi AS الجنس, terka AS التركة  FROM Table_2; ", sql);
             DataTable dbt = new DataTable();
             da.Fill(dbt);
             dataGridView2.DataSource = dbt;
             sql.Close();
+           
+
         }
 
         private void dataGridView2_Click(object sender, EventArgs e)
         {
-            sql.Open();
+            Delete.Enabled = true;
+            ID_Elmwtafi.Enabled = false;
+            Male.Enabled = false;
+            Female.Enabled = false;
+            Edit.Enabled = true; 
+           // sql.Open();
             dataGridView3.Columns.Clear();
             dataGridView1.Visible = false;
             dataGridView3.Visible = true;
 
 
             int numodselectedrow = dataGridView2.CurrentCell.RowIndex;
-
             string selectedrow_ID = dataGridView2.Rows[numodselectedrow].Cells[0].Value.ToString();
+            textBox1.Text = selectedrow_ID; 
             double TERka = Convert.ToDouble(dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString());
-            TERka = Math.Round(TERka , 2); 
-            Tarka.Text =TERka.ToString();
-            Male.Checked = (dataGridView2.Rows[numodselectedrow].Cells[2].Value.ToString()=="ذكر"? true : false) ;
+            TERka = Math.Round(TERka, 2);
+            Tarka.Text = TERka.ToString();
+            Male.Checked = (dataGridView2.Rows[numodselectedrow].Cells[2].Value.ToString() == "ذكر" ? true : false);
             Female.Checked = (dataGridView2.Rows[numodselectedrow].Cells[2].Value.ToString() == "انثى" ? true : false);
             ID_Elmwtafi.Text = dataGridView2.Rows[numodselectedrow].Cells[0].Value.ToString();
             Name_elmotawfi.Text = dataGridView2.Rows[numodselectedrow].Cells[1].Value.ToString();
-           
-           foreach (DataGridViewRow item in dataGridView1.Rows)
+
+            foreach (DataGridViewRow item in dataGridView1.Rows)
             {
-                SqlDataAdapter da = new SqlDataAdapter("select t.value as 'النصيب', t.inheritance_ratio as 'نسبة الورث', t.ID as ' رقم البطاقه '   , t.name as'الاسم' ,t.relation as 'صلة القرابه'from Tb1 t where ID_elmotawfi ='"+ selectedrow_ID+"'", sql);
+                SqlDataAdapter da = new SqlDataAdapter("select t.value as 'النصيب', t.inheritance_ratio as 'نسبة الورث', t.ID as ' رقم البطاقه '   , t.name as'الاسم' ,t.relation as 'صلة القرابه'from Tb1 t where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
 
                 DataTable dbt = new DataTable();
                 da.Fill(dbt);
                 dataGridView3.DataSource = dbt;
-                
+
                 sql.Close();
             }
 
@@ -790,19 +847,23 @@ namespace almarith_project
 
         private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView3.AutoSize = true; 
+            dataGridView3.AutoSize = true;
         }
 
-       private void Delete_Click(object sender, EventArgs e)
+        private void Delete_Click(object sender, EventArgs e)
         {
             update.Enabled = true;
 
-            DialogResult result  = MessageBox.Show(  "هل انت متاكد من حزف هذا العنصر ","window title",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Warning);
-            if (result==DialogResult.Yes  )
+            DialogResult result = MessageBox.Show("هل انت متاكد من حزف هذا العنصر ", "window title", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+          if (result==DialogResult.Cancel) { return;  }
+            
+            if (result == DialogResult.OK)
             {
                 int numodselectedrow = dataGridView2.CurrentCell.RowIndex;
                 int C = dataGridView2.CurrentRow.Index;
-                string selectedrow_ID = dataGridView2.Rows[numodselectedrow].Cells[0].Value.ToString();
+                string selectedrow_ID = textBox1.Text; 
+
+
                 SqlCommand cm = new SqlCommand();
 
                 SqlDataAdapter da = new SqlDataAdapter("delete from Tb1 where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
@@ -815,27 +876,47 @@ namespace almarith_project
                 cm.ExecuteNonQuery();
                 sql.Close();
 
-                load();
+               
             }
-         }
-
-     
-        private void Cancel_Click(object sender, EventArgs e)
-        {
-            dataGridView2.Enabled = true;
+ load();
+            
             Save.Enabled = false;
-            Delete.Enabled = true;
-            Edit.Enabled =true;
-
+            Delete.Enabled = false;
+            Edit.Enabled = false;
+            added.Enabled = true;
             try
             {
-                dataGridView3.Rows.Clear();
-            }catch { }
+                dataGridView3.Columns.Clear();
+            }
+            catch { }
             Tarka.Text = null;
             Name_elmotawfi.Text = null;
             ID_Elmwtafi.Text = null;
             update.Enabled = false;
 
+
+        }
+
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            textBox1.Enabled = true;
+            dataGridView2.Enabled = true;
+            Save.Enabled = false;
+            Delete.Enabled = false;
+            Edit.Enabled = false;
+            added.Enabled = true;
+            Cancel.Enabled = false;
+            try
+            {
+                dataGridView3.Rows.Clear();
+            }
+            catch { }
+            Tarka.Text = null;
+            Name_elmotawfi.Text = null;
+            ID_Elmwtafi.Text = null;
+            update.Enabled = false;
+           
         }
 
         private void Male_CheckedChanged(object sender, EventArgs e)
@@ -843,69 +924,44 @@ namespace almarith_project
 
         }
 
-       
+
         private void Tarka_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-       
 
-        private void guna2Button1_Click_1(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
-           
+            Tarka.Enabled = false;
+            Male.Enabled = false;
+            Female.Enabled = false;
+            Name_elmotawfi.Enabled = false;
+            ID_Elmwtafi.Enabled = false;
+            Cancel.Enabled = false;
+            Edit.Enabled = false;
+            Delete.Enabled = false;
             dataGridView3.Columns.Clear();
+            ID_Elmwtafi.Text = null;
+            Name_elmotawfi.Text = null;
+            Tarka.Text = null;
+
             dataGridView1.Visible = false;
             dataGridView3.Visible = true;
-
-
-        
-
-            string selectedrow_ID = search.Text;
-            // شوف ال input 
-            // double TERka = Convert.ToDouble(dataGridView2.Rows[numodselectedrow].Cells[3].Value.ToString());
-            // TERka = Math.Round(TERka, 2);
-            //Tarka.Text = TERka.ToString();
-            //SqlCommand cm = new SqlCommand();
-            //cm = new SqlCommand("select terka from Table_2 where ID_elmotawfi = '" + selectedrow_ID + "'", sql);
-            //sql.Open(); 
-
-            //Tarka.Text=cm.ExecuteNonQuery().ToString() ;
-            //SqlCommand cmm = new SqlCommand();
-            //cmm = new SqlCommand("select kind_ofelmtawfi from Table_2 where ID_elmotawfi = '"+selectedrow_ID+"'", sql);
-
-            //Male.Checked = (cmm.ExecuteNonQuery().ToString() == "ذكر" ? true : false);
-            //Female.Checked = (cmm.ExecuteNonQuery().ToString() == "انثى" ? true : false);
-            //ID_Elmwtafi.Text = selectedrow_ID;
-            //SqlCommand cmmm = new SqlCommand();
-            //cmmm = new SqlCommand("select name_elmotawfi from Table_2 where ID_elmotawfi = '" + selectedrow_ID + "'", sql);
-            //Name_elmotawfi.Text = cmmm.ExecuteNonQuery().ToString();
-            ID_Elmwtafi.Text = search.Text; 
-
+            string selectedrow_ID = textBox1.Text;
+          //  ID_Elmwtafi.Text = textBox1.Text;
             SqlCommand cm = new SqlCommand("select terka,kind_ofelmtawfi,name_elmotawfi from Table_2 where ID_elmotawfi = @selectedrow_ID", sql);
             sql.Open();
-            cm.Parameters.AddWithValue("@selectedrow_ID",search.Text);
-            SqlDataReader Da = cm.ExecuteReader (); 
-            while ( Da.Read())
+            cm.Parameters.AddWithValue("@selectedrow_ID", textBox1.Text);
+            SqlDataReader Da = cm.ExecuteReader();
+            while (Da.Read())
             {
                 Name_elmotawfi.Text = Da.GetValue(2).ToString();
-               Tarka.Text = Da.GetValue(0).ToString();
+                Tarka.Text = Da.GetValue(0).ToString();
                 Male.Checked = (Da.GetValue(1).ToString() == "ذكر" ? true : false);
                 Female.Checked = (Da.GetValue(1).ToString() == "انثى" ? true : false);
             }
             sql.Close();
-
-
-
-
-
-
-
-
-
-
-
             foreach (DataGridViewRow item in dataGridView1.Rows)
             {
                 SqlDataAdapter da = new SqlDataAdapter("select t.value as 'النصيب', t.inheritance_ratio as 'نسبة الورث', t.ID as ' رقم البطاقه '   , t.name as'الاسم' ,t.relation as 'صلة القرابه'from Tb1 t where ID_elmotawfi ='" + selectedrow_ID + "'", sql);
@@ -919,17 +975,64 @@ namespace almarith_project
             Name_elmotawfi.Enabled = false;
 
 
-            if (dataGridView3.Rows.Count==0)
+            if (dataGridView3.Rows.Count > 0)
             {
-                ID_Elmwtafi.Text = search.Text;
+                ID_Elmwtafi.Text = textBox1.Text;
 
-                MessageBox.Show("لا يوجد بيانات مخزنه برقم البطاقه:"+ search.Text, "خطأ", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                Edit.Enabled = true;
+                Delete.Enabled = true;
             }
+
+        }
+
+        private void guna2Button1_Click_1(object sender, EventArgs e)
+        {
+            
+            textBox1.Enabled = false; 
+            update.Enabled = true;
+            added.Enabled = false; 
+            Delete.Enabled = false;
+            Save.Enabled = true;
+           // Edit.Enabled = false;
+            Cancel.Enabled = true;
+            Tarka.Enabled = true;
+            Male.Enabled = true;
+            Female.Enabled = true;
+            Name_elmotawfi.Enabled = true;
+            ID_Elmwtafi.Enabled = true;
+            dataGridView1.Visible = true;
+            dataGridView3.Visible = false;
+            int i = 0;
+            try
+            {
+                for (int ii = 0; ii < dataGridView3.RowCount; ii++)
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    dataGridView1.Rows.Add(row);
+                }
+
+                foreach (DataGridViewRow it in dataGridView1.Rows)
+                {
+
+                    it.Cells[0].Value = dataGridView3.Rows[i].Cells[0]?.Value?.ToString();
+                    it.Cells[1].Value = dataGridView3.Rows[i].Cells[1]?.Value?.ToString();
+                    it.Cells[2].Value = dataGridView3.Rows[i].Cells[2]?.Value?.ToString();
+                    it.Cells[3].Value = dataGridView3.Rows[i].Cells[3]?.Value?.ToString();
+                    it.Cells[4].Value = dataGridView3.Rows[i].Cells[4]?.Value?.ToString();
+
+                    i++;
+
+                }
+            }
+
+            catch { }
 
 
         }
 
-      
-    }
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+    }
 }
