@@ -32,4 +32,3 @@ To get started, follow these steps:
 ```bash
 git clone https://github.com/t00nyG/almarith_project.git
 cd almarith_project
-# Add installation steps if necessary
