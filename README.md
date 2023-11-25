@@ -4,6 +4,8 @@
 
 Welcome to the Islamic Inheritance Calculator – a purpose-built solution designed to revolutionize the way lawyers handle inheritance-related matters. This tool was conceived with the aim of addressing the time-intensive processes associated with calculating and storing data in the realm of inheritances.
 
+![Islamic Inheritance Calculator](https://raw.githubusercontent.com/t00nyG/almarith_project/master/Islamic%20Inheritance%20Calculator.png)
+
 ## Problem Statement
 
 Lawyers often find themselves investing a considerable amount of time in manually calculating and recording data for inheritance-related cases. Recognizing this challenge, I embarked on a mission to create a user-friendly, efficient, and time-saving solution.
@@ -29,6 +31,6 @@ To further enhance productivity, the calculator includes a sophisticated databas
 To get started, follow these steps:
 
 ```bash
-git clone https://github.com/your-username/islamic-inheritance-calculator.git
-cd islamic-inheritance-calculator
+git clone https://github.com/t00nyG/almarith_project.git
+cd almarith_project
 # Add installation steps if necessary
