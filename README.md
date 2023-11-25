@@ -30,6 +30,6 @@ To further enhance productivity, the calculator includes a sophisticated databas
 To get started, follow these steps:
 
 ```bash
-git clone https://github.com/your-username/your-repository.git
+git clone https://github.com/t00nyG/almarith_project.git
 cd your-repository
 # Add installation steps if necessary
