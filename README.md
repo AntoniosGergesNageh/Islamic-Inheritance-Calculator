@@ -4,7 +4,6 @@
 
 Welcome to the Islamic Inheritance Calculator – a purpose-built solution designed to revolutionize the way lawyers handle inheritance-related matters. This tool was conceived with the aim of addressing the time-intensive processes associated with calculating and storing data in the realm of inheritances.
 
-![Islamic Inheritance Calculator](https://your-username.github.io/your-repository/Islamic%20Inheritance%20Calculator.png)
 
 ## Problem Statement
 
